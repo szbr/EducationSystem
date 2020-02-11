@@ -1,0 +1,53 @@
+﻿<Window x:Class="DesktopApp.View.ManageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp.View"
+        mc:Ignorable="d"
+        Title="Manage" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Background="Aquamarine" TextAlignment="Left">Students</TextBlock>
+
+        <DockPanel Grid.Row="1">
+            <TextBlock Width="100" Background="SlateGray"     Text="Student ID"/>
+            <TextBlock Width="100" Background="DarkSalmon"    Text="Student Name"/>
+            <TextBlock Width="130" Background="SteelBlue"     Text="Time"/>
+            <TextBlock Width="100"  Background="PaleVioletRed" Text="Grades"/>
+            <TextBlock Width="100"  Background="DarkSeaGreen"  Text="Add grade"/>
+            <TextBlock Background="Gray"/>
+        </DockPanel>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="itemsControl" ItemsSource="{Binding Students}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="100" Text="{Binding Data.UserName}"/>
+                            <TextBlock Width="100" Text="{Binding Data.Name}"/>
+                            <TextBlock Width="130" Text="{Binding Data.Timestamp}"/>
+                            <TextBlock Width="100" Text="{Binding Grades}"/>
+                            <ComboBox Width="50" x:Name="cbox_manage" Tag="{Binding Data.UserName}" IsEnabled="{Binding Enabled}">
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>3</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">5</ComboBoxItem>
+                            </ComboBox>
+                            <Button Width="50" Content="Add" IsEnabled="{Binding Enabled}"
+                            Command="{Binding
+                            RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}},
+                            Path=DataContext.AddGradeCmd}"
+                            CommandParameter="{Binding Data.UserName}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

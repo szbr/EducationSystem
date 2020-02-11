@@ -1,0 +1,40 @@
+﻿@using Website.Models;
+@model LoginVM
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<pre>
+    // csak teszteléshez...
+    student: ABCXYZ KRZMEP TUSMRE KFITPE GKEITP
+    teacher: TEACHR TEAFJR TEAKDO TEAFIR TEAFKR
+    pw:      abcdefgH0
+</pre>
+
+<form asp-controller="Account" asp-action="Login">
+    <div>@Html.ValidationSummary( false, "", new { @class = "text-danger" } )</div>
+    <div class="form-group">
+        <label for="username">User Name:</label>
+        <input asp-for="UserName" id="username" size="40" class="form-control" placeholder="Your user name" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input asp-for="UserPassword" id="password" class="form-control" placeholder="Enter password" />
+        <span asp-validation-for="UserPassword" class="text-danger"></span>
+    </div>
+    <div>
+        <label><input asp-for="RememberLogin" />Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync( "_ValidationScriptsPartial" );
+    }
+}

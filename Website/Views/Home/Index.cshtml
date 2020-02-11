@@ -1,0 +1,22 @@
+﻿@using Persistence;
+@model IList<Training>
+@{
+    ViewData["Title"] = "Trainings";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+@if( Model == null || !Model.Any( ) )
+{
+    <div class="contentText">No trainings available.</div>
+}
+else
+{
+    <ul>
+        @for( int i = 0; i < Model.Count; i++ )
+        {
+            <li><a asp-action="Details" asp-route-trainingId="@Model[i].TrainingId" asp-route-page="1">@Model[i].Name</a></li>
+        }
+    </ul>
+}

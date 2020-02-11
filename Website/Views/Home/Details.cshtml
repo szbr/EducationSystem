@@ -1,0 +1,105 @@
+﻿@using Website.Models;
+@model DetailsVM
+@{
+    ViewData["Title"] = "Courses";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+@using( Html.BeginForm( ) )
+{
+    <p>
+        Find: @Html.TextBox( "searchString", Model.CurFilter )
+        <input type="submit" name="srchcmd" value="Search Course" />
+        <input type="submit" name="srchcmd" value="Search Teacher" />
+    </p>
+    @if( ViewBag.CurUserName != null )
+    {
+        <p>
+            <input type="submit" name="srchcmd" value="Search Finished" />
+            <input type="submit" name="srchcmd" value="Search Active" />
+        </p>
+    }
+}
+
+<div>
+    <a asp-action="Details" asp-route-trainingId="@Model.TrId" asp-route-page="@Model.FirstPage" asp-route-curFilter="">[Reset Filter]</a>
+</div>
+
+<div style="background-color: lightgray;">
+    <a asp-action="Details" asp-route-trainingId="@Model.TrId" asp-route-page="@Model.FirstPage" asp-route-srchcmd="@Model.CurCmd" asp-route-curFilter="@Model.CurFilter">[First Page]</a>
+    <a asp-action="Details" asp-route-trainingId="@Model.TrId" asp-route-page="@Model.PrevPage" asp-route-srchcmd="@Model.CurCmd" asp-route-curFilter="@Model.CurFilter">[Prev Page]</a>
+    <a asp-action="Details" asp-route-trainingId="@Model.TrId" asp-route-page="@Model.NextPage" asp-route-srchcmd="@Model.CurCmd" asp-route-curFilter="@Model.CurFilter">[Next Page]</a>
+    <a asp-action="Details" asp-route-trainingId="@Model.TrId" asp-route-page="@Model.LastPage" asp-route-srchcmd="@Model.CurCmd" asp-route-curFilter="@Model.CurFilter">[Last Page]</a>
+</div>
+<p>Page: @Model.CurPage / @Model.LastPage</p>
+
+<table class="table">
+    <tr style="color: seagreen;">
+        <th>Code</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Schedule</th>
+        <th>Students</th>
+        <th>Max</th>
+        @if( ViewBag.CurUserName != null )
+        {
+            <th>Manage</th>
+            <th>Grades</th>
+        }
+    </tr>
+    @foreach( CourseVM c in Model.Courses )
+    {
+        string style = "";
+        if( ViewBag.CurUserName != null )
+        {
+            if( c.Passed )
+            {
+                style = "color: steelblue;";
+            }
+            else if( c.CourseAction == "Drop" )
+            {
+                style = "color: blueviolet;";
+            }
+            else if( c.CourseAction == "(Take)" )
+            {
+                style = "color: silver;";
+            }
+        }
+        <tr style="@style">
+            <td>@c.CourseId</td>
+            <td>@c.SubjectId</td>
+            <td>@c.TeacherName</td>
+            <td>@c.Schedule</td>
+            <td>@c.CurStudents</td>
+            <td>@c.MaxStudents</td>
+            @if( ViewBag.CurUserName != null )
+            {
+                <td>
+                    @using( Html.BeginForm( "CourseAction", "Home", new { cid = c.CourseId }, FormMethod.Post ) )
+                    {
+                        <p>
+                            @if( c.CourseAction == "----" || c.CourseAction == "(Take)" )
+                            {
+                                <input type="submit" name="courseAction" value="@c.CourseAction" disabled />
+                            }
+                            else
+                            {
+                                <input type="submit" name="courseAction" value="@c.CourseAction" />
+                            }
+                        </p>
+                    }
+                </td>
+                <td>
+                    <ul>
+                        @foreach( int g in c.Grades )
+                        {
+                            <li>@g</li>
+                        }
+                    </ul>
+                </td>
+            }
+        </tr>
+    }
+</table>

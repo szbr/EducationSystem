@@ -1,0 +1,26 @@
+﻿<Window x:Class="DesktopApp.View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp.View"
+        mc:Ignorable="d"
+        Title="Login" Height="200" Width="200" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Background="Aquamarine">Login to TR.</TextBlock>
+        <Label Grid.Row="1">User Name</Label>
+        <TextBox Grid.Row="2" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" MaxLength="6"/>
+        <Label Grid.Row="3">Password</Label>
+        <PasswordBox Grid.Row="4" x:Name="pwbox"/>
+        <Button Grid.Row="5" Command="{Binding LoginCmd}" CommandParameter="{Binding ElementName=pwbox}" Width="128" Height="32">Login</Button>
+    </Grid>
+</Window>

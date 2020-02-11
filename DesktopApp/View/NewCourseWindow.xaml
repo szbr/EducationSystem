@@ -1,0 +1,60 @@
+﻿<Window x:Class="DesktopApp.View.NewCourseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp.View"
+        mc:Ignorable="d"
+        Title="New Course" Height="350" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Background="Aquamarine" TextAlignment="Left">New Course</TextBlock>
+
+        <DockPanel Grid.Row="1">
+            <TextBlock Width="100" Background="SteelBlue" TextAlignment="Left">Training:</TextBlock>
+            <ComboBox Width="100" ItemsSource="{Binding Trainings}" SelectedItem="{Binding SelectedTraining}"
+                      SelectionChanged="SelectionChangedHandler"/>
+            <TextBlock Background="LightSeaGreen"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2">
+            <TextBlock Width="100" Background="SteelBlue" TextAlignment="Left">Subject:</TextBlock>
+            <ComboBox Width="100" ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}"/>
+            <TextBlock Background="LightSeaGreen"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="3">
+            <TextBlock Width="100" Background="SteelBlue" TextAlignment="Left">Max students:</TextBlock>
+            <TextBox Width="45" MaxLength="3" Text="{Binding MaxStudents}"
+                 PreviewTextInput="PreviewTextInputHandler"
+                 DataObject.Pasting="DataObjectPastingHandler"
+                 PreviewKeyDown="PreviewKeyDownHandler"/>
+            <TextBlock Background="LightSeaGreen">// [1..999]</TextBlock>
+        </DockPanel>
+
+        <DockPanel Grid.Row="4">
+            <TextBlock Width="100" Background="SteelBlue" TextAlignment="Left">Schedule:</TextBlock>
+            <ComboBox Width="100" ItemsSource="{Binding Weekdays}" SelectedIndex="{Binding SelectedWeekdayIdx}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Hours}" SelectedIndex="{Binding SelectedHourIdx}"/>
+            <ComboBox Width="50" ItemsSource="{Binding Minutes}" SelectedIndex="{Binding SelectedMinuteIdx}"/>
+            <TextBlock Background="LightSeaGreen"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="5">
+            <TextBlock Width="100" Background="SteelBlue" TextAlignment="Left">Duration:</TextBlock>
+            <ComboBox Width="50" ItemsSource="{Binding Durations}" SelectedIndex="{Binding SelectedDurationIdx}"/>
+            <TextBlock Background="LightSeaGreen">// Hours</TextBlock>
+        </DockPanel>
+
+        <Button Grid.Row="6" Width="256" Height="64" Command="{Binding SubmitNewCourseCmd}">Submit</Button>
+    </Grid>
+</Window>

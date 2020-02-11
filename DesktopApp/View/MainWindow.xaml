@@ -1,0 +1,62 @@
+﻿<Window x:Class="DesktopApp.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp.View"
+        mc:Ignorable="d"
+        Title="TR" Height="450" Width="700" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Image x:Key="iconNew"  x:Shared="False" Source="/DesktopApp;component/Resources/newicon.png" Width="16" Height="16"/>
+        <Image x:Key="iconSave" x:Shared="False" Source="/DesktopApp;component/Resources/save.png"    Width="16" Height="16"/>
+        <Image x:Key="iconLoad" x:Shared="False" Source="/DesktopApp;component/Resources/open.png"    Width="16" Height="16"/>
+        <Image x:Key="iconInfo" x:Shared="False" Source="/DesktopApp;component/Resources/info.png"    Width="16" Height="16"/>
+        <Image x:Key="iconExit" x:Shared="False" Source="/DesktopApp;component/Resources/close.png"   Width="16" Height="16"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Manage">
+                <MenuItem Header="New Course" Icon="{StaticResource iconNew}" Command="{Binding NewCourseCmd}"/>
+                <Separator/>
+                <MenuItem Header="Logout" Icon="{StaticResource iconExit}" Command="{Binding LogoutCmd}"/>
+            </MenuItem>
+        </Menu>
+
+        <TextBlock Grid.Row="1" Background="Aquamarine" TextAlignment="Right" Text="{Binding LoggedInUser}"/>
+
+        <DockPanel Grid.Row="2">
+            <TextBlock Width="100" Background="SlateGray"     Text="Course ID"/>
+            <TextBlock Width="100" Background="DarkSalmon"    Text="Subject Name"/>
+            <TextBlock Width="125" Background="SteelBlue"     Text="Schedule"/>
+            <TextBlock Width="75"  Background="PaleVioletRed" Text="Manage"/>
+            <TextBlock Background="Gray"/>
+        </DockPanel>
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Height="360">
+            <ItemsControl ItemsSource="{Binding Courses}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="100" Text="{Binding Data.CourseId}"/>
+                            <TextBlock Width="100" Text="{Binding Data.SubjectName}"/>
+                            <TextBlock Width="125" Text="{Binding Data.Schedule}"/>
+                            <Button Width="75" Content="Students"
+                            Command="{Binding
+                            RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}},
+                            Path=DataContext.ManageCmd}"
+                            CommandParameter="{Binding Data.CourseId}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>
